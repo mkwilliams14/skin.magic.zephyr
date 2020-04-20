@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1138">
+    <defaultcontrol always="true">4100</defaultcontrol>
+    <onload>SetProperty(Header_Left_Text,$LOCALIZE[137])</onload>
+    <onload condition="String.IsEmpty(Skin.String(SearchTerm))">Back</onload>
+    <controls>
+        <include>Global_Background</include>
+        <control type="group">
+            <visible allowhiddenfocus="true">!$EXP[Exp_ShowPlotOverlay] + !$EXP[Exp_InfoVisible]</visible>
+            <include>Animation_Common</include>
+            <control type="group">
+                <include content="View_Pad">
+                    <param name="left" value="0" />
+                    <param name="right" value="0" />
+                </include>
+                <include content="DialogVideoInfo_WidgetGroupList">
+                    <include>skinshortcuts-template-search</include>
+                </include>
+            </control>
+            <include>Topbar_Left</include>
+        </control>
+        <include>Topbar_Right</include>
+        <include>Object_PlotOverlay</include>
+    </controls>
+</window>

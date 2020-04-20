@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<include name="Object_Widget_Spotlight">
+        <param name="id" default="5610" />
+        <param name="controltype" default="list" />
+        <param name="squarecondition" default="[!String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(302).ListItem.Property(widgetAspect),Square)] | [String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(301).ListItem.Property(widgetAspect),Square)]" />
+        <param name="iconcondition" default="[!String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(302).ListItem.Property(widgetAspect),Icon)] | [String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(301).ListItem.Property(widgetAspect),Icon)]" />
+        <param name="landscapecondition" default="[!String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(302).ListItem.Property(widgetAspect),Landscape)] | [String.IsEmpty(Container(302).ListItem.Property(widgetPath)) + String.IsEqual(Container(301).ListItem.Property(widgetAspect),Landscape)]" />
+        <param name="smalllandscapecondition" default="false" />
+        <param name="smallsquarecondition" default="false" />
+        <param name="bannercondition" default="false" />
+        <param name="height" default="item_row_height" />
+        <param name="includecontent" default="true" />
+        <param name="top" default="442.5" />
+        <param name="landscapelabelinclude" default="View_51_Wall_Landscape_Home_Label" />
+        <param name="smalllandscapelabelinclude" default="View_51_Wall_SmallLandscape_Home_Label" />
+        <param name="squarelabelinclude" default="View_51_Wall_SmallSquare_Home_Label" />
+        <param name="left" default="-15" />
+        <param name="right" default="-25" />
+        <param name="limit" default="25" />
+        <definition>
+            <control type="$PARAM[controltype]" id="$PARAM[id]">
+                <nested />
+                <scrolltime tween="quadratic">400</scrolltime>
+                <top>$PARAM[top]</top>
+                <height>$PARAM[height]</height>
+                <right>$PARAM[right]</right>
+                <left>$PARAM[left]</left>
+                <onfocus>SetProperty(SkinHelper.WidgetContainer,$PARAM[id],Home)</onfocus>
+                <onfocus>SetProperty(ListItemHelper.WidgetContainerId,$PARAM[id],Home)</onfocus>
+                <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1136)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + [String.IsEmpty(ListItem.DBID) | [!String.IsEqual(ListItem.DBType,movie) + !String.IsEqual(ListItem.DBType,tvshow)]]">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.FolderPath],call_auto=1136)</onclick>
+                <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1136)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + !String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,movie)">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.Label,videodb://movies/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22movies%22%7D],call_auto=1136)</onclick>
+                <onclick condition="[Window.IsVisible(DialogVideoInfo.xml) | Window.IsVisible(1136)] + String.StartsWith(ListItem.FolderPath,plugin://plugin.video.themoviedb.helper) + !String.IsEmpty(ListItem.DBID) + String.IsEqual(ListItem.DBType,tvshow)">RunScript(plugin.video.themoviedb.helper,add_path=$INFO[ListItem.Label,videodb://tvshows/titles/?xsp=%7B%22order%22%3A%7B%22direction%22%3A%22ascending%22%2C%22ignorefolders%22%3A0%2C%22method%22%3A%22sorttitle%22%7D%2C%22rules%22%3A%7B%22and%22%3A%5B%7B%22field%22%3A%22title%22%2C%22operator%22%3A%22is%22%2C%22value%22%3A%5B%22,%22%5D%7D%5D%7D%2C%22type%22%3A%22tvshows%22%7D],call_auto=1136)</onclick>
+                <preloaditems>2</preloaditems>
+                <orientation>horizontal</orientation>
+
+                <itemlayout width="item_square_width" height="item_row_height" condition="$PARAM[smallsquarecondition]">
+                    <include content="Widget_Smallsquare_Itemlayout">
+                        <param name="aspectratio" value="keep" />
+                        <param name="icononlyheight" value="item_smallsquare_iconheight" />
+                        <param name="textfade_end" value="40" />
+                        <param name="textfade_start" value="40" />
+                        <param name="bordersize" value="90" />
+                        <param name="selectbox" value="false" />
+                        <param name="diffuse" value="diffuse/square-wall.png" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[squarelabelinclude]" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="item_square_width" height="item_row_height" condition="$PARAM[smallsquarecondition]">
+                    <include content="Widget_Smallsquare_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="aspectratio" value="keep" />
+                        <param name="icononlyheight" value="item_smallsquare_iconheight" />
+                        <param name="textfade_start" value="40" />
+                        <param name="bordersize" value="90" />
+                        <param name="diffuse" value="diffuse/square-wall.png" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[squarelabelinclude]" />
+                    </include>
+                </focusedlayout>
+
+                <itemlayout width="item_square_width" height="item_row_height" condition="$PARAM[iconcondition] | $PARAM[squarecondition]">
+                    <include content="Viewtype_Poster_Itemlayout">
+                        <param name="aspectratio" value="keep" />
+                        <param name="bordersize" value="90" />
+                        <param name="selectbox" value="false" />
+                        <param name="diffuse" value="diffuse/square-wall.png" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[labelinclude]" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="item_square_width" height="item_row_height" condition="$PARAM[iconcondition] | $PARAM[squarecondition]">
+                    <include content="Viewtype_Poster_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="aspectratio" value="keep" />
+                        <param name="bordersize" value="90" />
+                        <param name="diffuse" value="diffuse/square-wall.png" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[labelinclude]" />
+                    </include>
+                </focusedlayout>
+
+                <itemlayout width="item_smalllandscape_width" height="item_row_height" condition="$PARAM[smalllandscapecondition]">
+                    <include content="Viewtype_Landscape_Itemlayout">
+                        <param name="iconheight" value="item_icon_height" />
+                        <param name="icononlyheight" value="item_smalllandscape_iconheight" />
+                        <param name="textfade_end" value="40" />
+                        <param name="textfade_start" value="40" />
+                        <param name="selectbox" value="false" />
+                        <param name="icon" value="$VAR[Image_Landscape]" />
+                        <param name="diffuse" value="diffuse/landscape-small-wall.png" />
+                        <param name="labelinclude" value="$PARAM[smalllandscapelabelinclude]" />
+                        <param name="id" value="$PARAM[id]" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="item_smalllandscape_width" height="item_row_height" condition="$PARAM[smalllandscapecondition]">
+                    <include content="Viewtype_Landscape_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="iconheight" value="item_icon_height" />
+                        <param name="textfade_start" value="40" />
+                        <param name="icononlyheight" value="item_smalllandscape_iconheight" />
+                        <param name="icon" value="$VAR[Image_Landscape]" />
+                        <param name="diffuse" value="diffuse/landscape-small-wall.png" />
+                        <param name="labelinclude" value="$PARAM[smalllandscapelabelinclude]" />
+                        <param name="id" value="$PARAM[id]" />
+                    </include>
+                </focusedlayout>
+
+                <itemlayout width="item_landscape_width" height="item_row_height" condition="$PARAM[landscapecondition]">
+                    <include content="Viewtype_Landscape_Itemlayout">
+                        <param name="iconheight" value="item_icon_height" />
+                        <param name="selectbox" value="false" />
+                        <param name="icon" value="$VAR[Image_Landscape]" />
+                        <param name="diffuse" value="diffuse/landscape-wall.png" />
+                        <param name="labelinclude" value="Defs_Null" />
+                        <param name="clearlogo" value="[!String.IsEmpty(ListItem.Art(clearlogo)) | !String.IsEmpty(ListItem.Art(tvshow.clearlogo))] + [[String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(tvshow.landscape))] | [[!String.IsEmpty(ListItem.Art(tvshow.landscape)) | !String.IsEmpty(ListItem.Art(landscape))] + !Skin.HasSetting(LandscapeArt)] | [!String.IsEmpty(ListItem.Art(thumb)) + [String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,video)] + String.IsEmpty(ListItem.Property(airday))]]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="label2" value="$PARAM[label2]" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="item_landscape_width" height="item_row_height" condition="$PARAM[landscapecondition]">
+                    <include content="Viewtype_Landscape_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="iconheight" value="item_icon_height" />
+                        <param name="icon" value="$VAR[Image_Landscape]" />
+                        <param name="diffuse" value="diffuse/landscape-wall.png" />
+                        <param name="labelinclude" value="Defs_Null" />
+                        <param name="clearlogo" value="[!String.IsEmpty(ListItem.Art(clearlogo)) | !String.IsEmpty(ListItem.Art(tvshow.clearlogo))] + [[String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(tvshow.landscape))] | [[!String.IsEmpty(ListItem.Art(tvshow.landscape)) | !String.IsEmpty(ListItem.Art(landscape))] + !Skin.HasSetting(LandscapeArt)] | [!String.IsEmpty(ListItem.Art(thumb)) + [String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,video)] + String.IsEmpty(ListItem.Property(airday))]]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="label2" value="$PARAM[label2]" />
+                    </include>
+                </focusedlayout>
+
+                <itemlayout width="1800" height="item_row_height" condition="$PARAM[bannercondition]">
+                    <include content="Viewtype_BigBanner_Itemlayout">
+                        <param name="selectbox" value="false" />
+                        <param name="icon" value="$VAR[Image_Banner]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="Defs_Null" />
+                        <param name="diffuse" value="diffuse/banner-widget.png" />
+                    </include>
+                    <control type="image">
+                        <aspectratio align="left">keep</aspectratio>
+                        <bordersize>90</bordersize>
+                        <height>350</height>
+                        <texture background="true">$VAR[Image_ClearLogo]</texture>
+                        <visible>String.IsEmpty(ListItem.Art(banner)) + String.IsEmpty(ListItem.Art(tvshow.banner))</visible>
+                    </control>
+                </itemlayout>
+                <focusedlayout width="1800" height="item_row_height" condition="$PARAM[bannercondition]">
+                    <include content="Viewtype_BigBanner_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="icon" value="$VAR[Image_Banner]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="Defs_Null" />
+                        <param name="diffuse" value="diffuse/banner-widget.png" />
+                    </include>
+                    <control type="image">
+                        <aspectratio align="left">keep</aspectratio>
+                        <bordersize>90</bordersize>
+                        <height>350</height>
+                        <texture background="true">$VAR[Image_ClearLogo]</texture>
+                        <visible>String.IsEmpty(ListItem.Art(banner)) + String.IsEmpty(ListItem.Art(tvshow.banner))</visible>
+                    </control>
+                </focusedlayout>
+
+                <itemlayout width="item_poster_width" height="item_row_height" condition="![$PARAM[squarecondition] | $PARAM[iconcondition] | $PARAM[landscapecondition] | $PARAM[smalllandscapecondition] | $PARAM[smallsquarecondition] | $PARAM[bannercondition]]">
+                    <include content="Viewtype_Poster_Itemlayout">
+                        <param name="selectbox" value="false" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[labelinclude]" />
+                        <param name="diffuse" value="diffuse/poster-std.png" />
+                    </include>
+                </itemlayout>
+                <focusedlayout width="item_poster_width" height="item_row_height" condition="![$PARAM[squarecondition] | $PARAM[iconcondition] | $PARAM[landscapecondition] | $PARAM[smalllandscapecondition] | $PARAM[smallsquarecondition] | $PARAM[bannercondition]]">
+                    <include content="Viewtype_Poster_Itemlayout">
+                        <param name="selectbox" value="true" />
+                        <param name="icon" value="$VAR[Image_Poster]" />
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="labelinclude" value="$PARAM[labelinclude]" />
+                        <param name="diffuse" value="diffuse/poster-std.png" />
+                    </include>
+                </focusedlayout>
+
+                <include content="Object_Widget_ContentPath" condition="$PARAM[includecontent]">
+                    <param name="target" value="$PARAM[target]" />
+                    <param name="sortby" value="$PARAM[sortby]" />
+                    <param name="sortorder" value="$PARAM[sortorder]" />
+                    <param name="limit" value="$VAR[Label_WidgetItemLimit]" />
+                    <param name="content" value="$PARAM[content]" />
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Object_Widget_ContentPath">
+        <content target="$PARAM[target]" sortby="$PARAM[sortby]" sortorder="$PARAM[sortorder]" limit="$PARAM[limit]">$PARAM[content]</content>
+        <content>
+            <item>
+                <label>Show More...</label>
+                <label2>Browse more items in this list</label2>
+                <icon>common/nextitem.png</icon>
+                <onclick>ActivateWindow($PARAM[target],$PARAM[content],return)</onclick>
+                <visible>Skin.HasSetting(EnableShowMore)</visible>
+                <visible>Integer.IsGreater(Container($PARAM[id]).NumItems,19)</visible>
+            </item>
+        </content>
+    </include>
+
+    <include name="Widget_Smallsquare_Itemlayout">
+        <param name="selectbox" default="false" />
+        <param name="textbox-height" default="89" />
+        <param name="textbox-visible" default="true" />
+        <param name="label-include" default="Widget_Smallsquare_Label" />
+        <param name="textpanel" default="true" />
+        <definition>
+            <include condition="$PARAM[textpanel]">Object_PosterBack</include>
+            <control type="group">
+                <include>Defs_Pad</include>
+                <!-- Image -->
+                <control type="group">
+                    <bottom>$PARAM[textbox-height]</bottom>
+                    <include content="Object_PosterBack" condition="!$PARAM[textpanel]">
+                        <param name="pad" value="-5" />
+                    </include>
+                    <include condition="$PARAM[selectbox] + $PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                        <bottom>-$PARAM[textbox-height]</bottom>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox]">common/box.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox2]">common/box-gradient-vertical.png</texture>
+                        </control>
+                    </include>
+                    <include condition="$PARAM[selectbox] + !$PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox]">common/box.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox2]">common/box-gradient-vertical.png</texture>
+                        </control>
+                    </include>
+                    <include content="Object_Artwork">
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="altid" value="$PARAM[altid]" />
+                        <param name="selectbox" value="$PARAM[selectbox]" />
+                        <param name="diffuse" value="$PARAM[diffuse]" />
+                        <param name="icon" value="$PARAM[icon]" />
+                        <param name="aspectratio" value="$PARAM[aspectratio]" />
+                    </include>
+                    <include condition="!$PARAM[textpanel]">View_WatchedOverlay</include>
+                    <include condition="$PARAM[selectbox] + !$PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                    </include>
+                </control>
+                
+                <!-- Watched Overlay and Selectbox -->
+                <include condition="$PARAM[textpanel]">View_WatchedOverlay</include>
+                <include condition="$PARAM[selectbox] + $PARAM[textpanel]" content="View_Selectbox">
+                    <param name="focusbounce" value="true" />
+                    <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                    <include content="Viewtype_Landscape_Bottom" condition="!$PARAM[textbox-visible]">
+                        <param name="height" value="$PARAM[textbox-height]" />
+                    </include>
+                </include>
+
+                <!-- Textlabels for Panel -->
+                <control type="group">
+                    <height>$PARAM[textbox-height]</height>
+                    <visible>$PARAM[textbox-visible]</visible>
+                    <bottom>0</bottom>
+                    <include content="$PARAM[label-include]" description="Unfocused" condition="$PARAM[textpanel]">
+                        <param name="visible" value="!Control.HasFocus($PARAM[id]) | !$PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_fg_30" />
+                        <param name="textcolor_70" value="panel_fg_30" />
+                    </include>
+                    <include content="$PARAM[label-include]" description="Focused" condition="Skin.HasSetting(EnableMonochromeHighlight) + $PARAM[textpanel]">
+                        <param name="visible" value="Control.HasFocus($PARAM[id]) + $PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_bg" />
+                        <param name="textcolor_70" value="panel_bg" />
+                    </include>
+                    <include content="$PARAM[label-include]" description="Focused" condition="!Skin.HasSetting(EnableMonochromeHighlight) + $PARAM[textpanel]">
+                        <param name="visible" value="Control.HasFocus($PARAM[id]) + $PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_fg_100" />
+                        <param name="textcolor_70" value="panel_fg_70" />
+                    </include>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Viewtype_Poster_Itemlayout">
+        <param name="selectbox" default="false" />
+        <param name="focusbounce" default="true" />
+        <param name="castlabel" default="false" />
+        <definition>
+            <include>Object_PosterBack</include>
+            <control type="group">
+                <include>Defs_Pad</include>
+                
+                <include condition="$PARAM[selectbox]" content="View_Selectbox">
+                    <param name="focusbounce" value="true" />
+                    <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                    <control type="image">
+                        <bordersize>7</bordersize>
+                        <texture border="10" colordiffuse="$VAR[ColorSelectBox]">common/box.png</texture>
+                    </control>
+                    <control type="image">
+                        <bordersize>7</bordersize>
+                        <texture border="10" colordiffuse="$VAR[ColorSelectBox2]">common/box-gradient-vertical.png</texture>
+                    </control>
+                </include>
+                <!-- Image -->
+                <include content="Object_Artwork">
+                    <param name="id" value="$PARAM[id]" />
+                    <param name="altid" value="$PARAM[altid]" />
+                    <param name="selectbox" value="$PARAM[selectbox]" />
+                    <param name="diffuse" value="$PARAM[diffuse]" />
+                    <param name="icon" value="$PARAM[icon]" />
+                    <param name="textonly" value="$PARAM[textonly]" />
+                </include>
+
+                <include content="View_Cast_Label">
+                    <param name="label2" value="$PARAM[label2]" />
+                    <param name="visible" value="$PARAM[castlabel]" />
+                </include>
+                
+                <!-- Watched Overlay and Selectbox -->
+                <include>View_WatchedOverlay</include>
+                <include condition="$PARAM[selectbox]" content="View_Selectbox">
+                    <param name="focusbounce" value="$PARAM[focusbounce]" />
+                    <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                </include>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Viewtype_Landscape_Itemlayout">
+        <param name="selectbox" default="false" />
+        <param name="textbox-height" default="89" />
+        <param name="textbox-visible" default="true" />
+        <param name="label-include" default="Viewtype_Landscape_Label" />
+        <param name="textpanel" default="true" />
+        <definition>
+            <include condition="$PARAM[textpanel]">Object_PosterBack</include>
+            <control type="group">
+                <include>Defs_Pad</include>
+                <!-- Image -->
+                <control type="group">
+                    <bottom>$PARAM[textbox-height]</bottom>
+                    <include content="Object_PosterBack" condition="!$PARAM[textpanel]">
+                        <param name="pad" value="-5" />
+                    </include>
+                    <include condition="$PARAM[selectbox] + $PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                        <bottom>-$PARAM[textbox-height]</bottom>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox]">common/box.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox2]">common/box-gradient-vertical.png</texture>
+                        </control>
+                    </include>
+                    <include condition="$PARAM[selectbox] + !$PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox]">common/box.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>7</bordersize>
+                            <texture border="10" colordiffuse="$VAR[ColorSelectBox2]">common/box-gradient-vertical.png</texture>
+                        </control>
+                    </include>
+                    <include content="Object_Artwork">
+                        <param name="id" value="$PARAM[id]" />
+                        <param name="altid" value="$PARAM[altid]" />
+                        <param name="selectbox" value="$PARAM[selectbox]" />
+                        <param name="diffuse" value="$PARAM[diffuse]" />
+                        <param name="icon" value="$PARAM[icon]" />
+                        <param name="aspectratio" value="$PARAM[aspectratio]" />
+                    </include>
+                    <include condition="!$PARAM[textpanel]">View_WatchedOverlay</include>
+                    <include condition="$PARAM[selectbox] + !$PARAM[textpanel]" content="View_Selectbox">
+                        <param name="focusbounce" value="true" />
+                        <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                    </include>
+                </control>
+                
+                <!-- Watched Overlay and Selectbox -->
+                <include condition="$PARAM[textpanel]">View_WatchedOverlay</include>
+                <include condition="$PARAM[selectbox] + $PARAM[textpanel]" content="View_Selectbox">
+                    <param name="focusbounce" value="true" />
+                    <visible>Control.HasFocus($PARAM[id]) | Control.HasFocus($PARAM[altid])</visible>
+                    <include content="Viewtype_Landscape_Bottom" condition="!$PARAM[textbox-visible]">
+                        <param name="height" value="$PARAM[textbox-height]" />
+                    </include>
+                </include>
+
+                <!-- Textlabels for Panel -->
+                <control type="group">
+                    <height>$PARAM[textbox-height]</height>
+                    <visible>$PARAM[textbox-visible]</visible>
+                    <bottom>0</bottom>
+                    <include content="$PARAM[label-include]" description="Unfocused" condition="$PARAM[textpanel]">
+                        <param name="visible" value="!Control.HasFocus($PARAM[id]) | !$PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_fg_30" />
+                        <param name="textcolor_70" value="panel_fg_30" />
+                    </include>
+                    <include content="$PARAM[label-include]" description="Focused" condition="Skin.HasSetting(EnableMonochromeHighlight) + $PARAM[textpanel]">
+                        <param name="visible" value="Control.HasFocus($PARAM[id]) + $PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_bg" />
+                        <param name="textcolor_70" value="panel_bg" />
+                    </include>
+                    <include content="$PARAM[label-include]" description="Focused" condition="!Skin.HasSetting(EnableMonochromeHighlight) + $PARAM[textpanel]">
+                        <param name="visible" value="Control.HasFocus($PARAM[id]) + $PARAM[selectbox]" />
+                        <param name="textcolor_100" value="panel_fg_100" />
+                        <param name="textcolor_70" value="panel_fg_70" />
+                    </include>
+                </control>
+
+                <!-- Textlabels for No Panel -->
+                <control type="group">
+                    <height>$PARAM[textbox-height]</height>
+                    <visible>$PARAM[textbox-visible]</visible>
+                    <bottom>-10</bottom>
+                    <include content="$PARAM[label-include]" description="Unfocused" condition="!$PARAM[textpanel]">
+                        <param name="visible" value="!Control.HasFocus($PARAM[id]) | !$PARAM[selectbox]" />
+                        <param name="textcolor_100" value="main_fg_30" />
+                        <param name="textcolor_70" value="main_fg_30" />
+                        <param name="align" value="left" />
+                        <param name="pad" value="15" />
+                    </include>
+                    <include content="$PARAM[label-include]" description="Focused" condition="!$PARAM[textpanel]">
+                        <param name="visible" value="Control.HasFocus($PARAM[id]) + $PARAM[selectbox]" />
+                        <param name="textcolor_100" value="main_fg_100" />
+                        <param name="textcolor_70" value="main_fg_70" />
+                        <param name="align" value="left" />
+                        <param name="pad" value="15" />
+                    </include>
+                </control>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Widget_Spotlight_Info">
+        <param name="plotheight" default="120" />
+        <definition>
+            <control type="grouplist">
+                <top>-15</top>
+                <orientation>vertical</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+                <itemgap>0</itemgap>
+                <include content="Object_Info_Title">
+                    <param name="font" value="$PARAM[font]" />
+                    <param name="titleheight" value="$PARAM[titleheight]" />
+                    <param name="label" value="$INFO[ListItem.Title]" />
+                </include>
+                <include>Object_Info_Line</include>
+                <include>Object_Info_Ratings</include>
+                <include content="Object_Info_Plot">
+                    <param name="maxheight" value="$PARAM[plotheight]" />
+                </include>
+            </control>
+        </definition>
+    </include>
+
+    <include name="Widget_List_Items">
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17501" />
+            <param name="id" value="13101" />
+            <param name="label" value="Continue Watching" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13101]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embymoviesf137a2dd21bbc1b99aa5c0f6bf02a805/inprogress.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13101).NumItems,0) | Container(13101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embymoviesf137a2dd21bbc1b99aa5c0f6bf02a805/inprogress.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13101).NumItems,0) | Container(13101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17502" />
+            <param name="id" value="13102" />
+            <param name="label" value="Newly Added Movies" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13102]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embymoviesf137a2dd21bbc1b99aa5c0f6bf02a805/recent.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13102).NumItems,0) | Container(13102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embymoviesf137a2dd21bbc1b99aa5c0f6bf02a805/recent.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13102).NumItems,0) | Container(13102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17503" />
+            <param name="id" value="13103" />
+            <param name="label" value="Recommended Movies" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13103]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13103" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.skin.helper.widgets/?action=recommended&amp;mediatype=movies&amp;tag=" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13103).NumItems,0) | Container(13103).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13103" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.skin.helper.widgets/?action=recommended&amp;mediatype=movies&amp;tag=" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13103).NumItems,0) | Container(13103).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17504" />
+            <param name="id" value="13104" />
+            <param name="label" value="Because you Watched $INFO[Container(13104).ListItem.Property(searchstring)]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13104]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13104" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getsimilar&amp;tag=Movies&amp;type=movie&amp;pos=0" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13104).NumItems,0) | Container(13104).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13104" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getsimilar&amp;tag=Movies&amp;type=movie&amp;pos=0" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13104).NumItems,0) | Container(13104).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17505" />
+            <param name="id" value="13105" />
+            <param name="label" value="Top 250 Movies" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13105]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13105" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="C:\Users\Mike\AppData\Roaming\Kodi\addons\skin.magic.zephyr\extras\playlists\Top250Movies.xsp" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13105).NumItems,0) | Container(13105).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13105" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="C:\Users\Mike\AppData\Roaming\Kodi\addons\skin.magic.zephyr\extras\playlists\Top250Movies.xsp" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13105).NumItems,0) | Container(13105).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17506" />
+            <param name="id" value="13106" />
+            <param name="label" value="Because you Watched $INFO[Container(13106).ListItem.Property(searchstring)]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13106]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13106" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getsimilar&amp;tag=Movies&amp;type=movie&amp;pos=0" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13106).NumItems,0) | Container(13106).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13106" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getsimilar&amp;tag=Movies&amp;type=movie&amp;pos=0" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13106).NumItems,0) | Container(13106).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17507" />
+            <param name="id" value="13107" />
+            <param name="label" value="Suggestions by Genre $INFO[Container(13107).ListItem.Property(searchstring),',']" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13107]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13107" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getbygenre&amp;tag=Movies&amp;type=movie" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13107).NumItems,0) | Container(13107).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13107" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getbygenre&amp;tag=Movies&amp;type=movie" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13107).NumItems,0) | Container(13107).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="17508" />
+            <param name="id" value="13108" />
+            <param name="label" value="$LOCALIZE[31257]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[13108]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="13108" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/movies/genres.xml" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13108).NumItems,0) | Container(13108).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="13108" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/movies/genres.xml" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(13101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(13108).NumItems,0) | Container(13108).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),movies)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="27501" />
+            <param name="id" value="23101" />
+            <param name="label" value="Continue Watching" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[23101]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="23101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embytvshows6c2a057148b4d7c20a207c789aba6d07/inprogressepisodes.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="true" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23101).NumItems,0) | Container(23101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="23101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="library://video/embytvshows6c2a057148b4d7c20a207c789aba6d07/inprogressepisodes.xml/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="true" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23101).NumItems,0) | Container(23101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="27502" />
+            <param name="id" value="23102" />
+            <param name="label" value="$LOCALIZE[31367]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[23102]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="23102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="C:\Users\Mike\AppData\Roaming\Kodi\addons\skin.magic.zephyr\extras\playlists\NewShows.xsp" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23102).NumItems,0) | Container(23102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="23102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="C:\Users\Mike\AppData\Roaming\Kodi\addons\skin.magic.zephyr\extras\playlists\NewShows.xsp" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23102).NumItems,0) | Container(23102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="27503" />
+            <param name="id" value="23103" />
+            <param name="label" value="Recommended TV Shows" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[23103]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="23103" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getbyargs&amp;sort_args=%7B%22order%22%3A+%22descending%22%2C+%22method%22%3A+%22rating%22%7D&amp;category_label=Recommended+by+rating&amp;tag=TV+shows&amp;limit=50&amp;type=tvshow" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23103).NumItems,0) | Container(23103).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="23103" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="plugin://script.magic.helper/?info=getbyargs&amp;sort_args=%7B%22order%22%3A+%22descending%22%2C+%22method%22%3A+%22rating%22%7D&amp;category_label=Recommended+by+rating&amp;tag=TV+shows&amp;limit=50&amp;type=tvshow" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(23101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(23103).NumItems,0) | Container(23103).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),tvshows)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="37501" />
+            <param name="id" value="33101" />
+            <param name="label" value="$LOCALIZE[1037]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[33101]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="33101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="addons://sources/video/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(33101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(33101).NumItems,0) | Container(33101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="33101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="addons://sources/video/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(33101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(33101).NumItems,0) | Container(33101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="37502" />
+            <param name="id" value="33102" />
+            <param name="label" value="$LOCALIZE[10001]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[33102]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="33102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="addons://sources/executable/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(33101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(33102).NumItems,0) | Container(33102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="33102" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="addons://sources/executable/" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="true" />
+            <param name="squarecondition" value="true" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(33101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(33102).NumItems,0) | Container(33102).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),programs)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="77501" />
+            <param name="id" value="73101" />
+            <param name="label" value="Settings" />
+            <param name="spinner-visible" value="String.IsEmpty(Container($PARAM[73101]).ListItem.Label)" />
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),settings)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="73101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="Settings" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(73101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(73101).NumItems,0) | Container(73101).IsUpdating</visible>
+            <visible>string.IsEqual(Container(301).ListItem.Property(defaultID),settings)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="73101" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="videos" />
+            <param name="content" value="Settings" />
+            <param name="limit" value="" />
+            <param name="sortby" value="" />
+            <param name="sortorder" value="" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <onback>SetFocus(73101)</onback>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(73101).NumItems,0) | Container(73101).IsUpdating</visible>
+            <visible>String.IsEqual(Container(301).ListItem.Property(id),7)</visible>
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets) + Integer.IsEqual(Container(3000).NumItems,1)" />
+            </include>
+        </include>
+    </include>
+
+    <include name="Widget_Spotlight_Items">
+        <include content="View_Cast_Toplabel">
+            <param name="groupid" value="997500" />
+            <param name="id" value="993100" />
+            <param name="label" value="$LOCALIZE[31105]" />
+            <param name="spinner-visible" value="String.IsEmpty(Container(993100).ListItem.Label)" />
+            <visible>String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-20342) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),tvshows) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),addons) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-31103) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-137) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),dvd) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-5)</visible>
+            <visible>Integer.IsEqual(Container(3700).NumItems,0)</visible>
+        </include>
+        <include condition="!Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="list" />
+            <param name="id" value="993100" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="$VAR[Defs_Widget_Target]" />
+            <param name="content" value="$INFO[Skin.String(widgetPath)]" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets)" />
+            </include>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(993100).NumItems,0) | Container(993100).IsUpdating</visible>
+            <visible>String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-20342) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),tvshows) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),addons) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-31103) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-137) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),dvd) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-5)</visible>
+            <visible>Integer.IsEqual(Container(3700).NumItems,0)</visible>
+        </include>
+        <include condition="Skin.HasSetting(FixedWidgets)" content="Object_Widget_Spotlight">
+            <param name="controltype" value="fixedlist" />
+            <param name="id" value="993100" />
+            <param name="top" value="52" />
+            <param name="left" value="0" />
+            <param name="right" value="-30" />
+            <param name="height" value="item_widget_height" />
+            <param name="orientation" value="horizontal" />
+            <param name="labelinclude" value="Defs_Null" />
+            <param name="landscapelabelinclude" value="View_Widget_LandscapeLabel" />
+            <param name="label2" value="ListItem.TvShowTitle" />
+            <param name="target" value="$VAR[Defs_Widget_Target]" />
+            <param name="content" value="$INFO[Skin.String(widgetPath)]" />
+            <param name="smallsquarecondition" value="false" />
+            <param name="squarecondition" value="false" />
+            <param name="smalllandscapecondition" value="false" />
+            <param name="landscapecondition" value="false" />
+            <param name="iconcondition" value="false" />
+            <param name="bannercondition" value="false" />
+            <include content="Defs_AutoScroll">
+                <param name="condition" value="!ControlGroup(3000).HasFocus() + System.IdleTime(1) + !Skin.HasSetting(DisableAutoScrollWidgets)" />
+            </include>
+            <onback>301</onback>
+            <visible>Integer.IsGreater(Container(993100).NumItems,0) | Container(993100).IsUpdating</visible>
+            <visible>String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-20342) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),tvshows) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),addons) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-31103) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-137) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),dvd) | String.IsEqual(Container(301).ListItem.Property(submenuVisibility),num-5)</visible>
+            <visible>Integer.IsEqual(Container(3700).NumItems,0)</visible>
+        </include>
+    </include>
+
+</includes>
